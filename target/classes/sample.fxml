@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="650" prefWidth="600" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+    <children>
+        <TabPane layoutX="147.0" layoutY="174.0" prefHeight="650.0" prefWidth="750.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <tabs>
+                <Tab id="mainTab" fx:id="mainTab" text="Letöltés">
+                    <content>
+                        <Pane id="mainPane" fx:id="mainPane" prefHeight="200.0" prefWidth="200.0">
+                            <children>
+                                <Label id="mainText" layoutX="176.0" layoutY="14.0" text="Youtube Videó Letöltő">
+                                    <font>
+                                        <Font size="24.0" />
+                                    </font>
+                                </Label>
+                                <Label layoutX="15.0" layoutY="551.0" text="Letöltött videók mappája: ">
+                                    <font>
+                                        <Font size="18.0" />
+                                    </font>
+                                </Label>
+                                <TextField id="path" fx:id="path" layoutX="227.0" layoutY="549.0" prefHeight="26.0" prefWidth="297.0" promptText="C:\Users\user\Downloads" text="C:\Users\Sándor\Downloads" />
+                                <Button layoutX="536.0" layoutY="549.0" onAction="#handleBrowse" text="..." />
+                                <TextField id="link" fx:id="link" layoutX="119.0" layoutY="59.0" prefHeight="65.0" prefWidth="352.0" promptText="https://youtube.com/watch?v=valami">
+                                    <font>
+                                        <Font size="18.0" />
+                                    </font>
+                                </TextField>
+                                <Label id="mainText" layoutX="15.0" layoutY="78.0" prefHeight="27.0" prefWidth="104.0" text="Videó linkje: ">
+                                    <font>
+                                        <Font size="18.0" />
+                                    </font>
+                                </Label>
+                                <Button id="mainText" layoutX="489.0" layoutY="59.0" mnemonicParsing="false" onAction="#convertAct" prefHeight="66.0" prefWidth="94.0" text="Konvertálás">
+                                    <font>
+                                        <Font size="14.0" />
+                                    </font>
+                                </Button>
+                                <Pane id="errPane" fx:id="errPane" layoutX="29.0" layoutY="131.0" prefHeight="256.0" prefWidth="532.0" visible="false">
+                                    <children>
+                                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#929394" height="256.0" stroke="BLACK" strokeType="INSIDE" width="532.0" />
+                                        <Button id="okButt" layoutX="233.0" layoutY="189.0" mnemonicParsing="false" onAction="#handleOk" prefHeight="43.0" prefWidth="67.0" text="OK">
+                                            <font>
+                                                <Font size="18.0" />
+                                            </font>
+                                        </Button>
+                                        <Label id="errLabel" fx:id="errLabel" layoutX="107.0" layoutY="40.0" prefHeight="142.0" prefWidth="340.0" text="Error" textFill="#f50505">
+                                            <font>
+                                                <Font name="System Bold" size="18.0" />
+                                            </font>
+                                        </Label>
+                                    </children>
+                                </Pane>
+                                <RadioButton id="mp4" fx:id="mp4" layoutX="465.0" layoutY="142.0" mnemonicParsing="false" text="mp4" />
+                                <RadioButton id="mp3" fx:id="mp3" layoutX="461.0" layoutY="217.0" mnemonicParsing="false" text="mp3" />
+                                <Label id="mainText" fx:id="vidLabel" layoutX="399.0" layoutY="138.0" prefHeight="28.0" prefWidth="59.0" text="Videó: " />
+                                <Label id="mainText" fx:id="audioLabel" layoutX="399.0" layoutY="215.0" text="Hang: ">
+                                    <font>
+                                        <Font size="16.0" />
+                                    </font>
+                                </Label>
+                                <RadioButton id="vidBest" fx:id="vidBest" layoutX="465.0" layoutY="175.0" mnemonicParsing="false" text="legjobb videó" />
+                                <RadioButton id="audioBest" fx:id="audioBest" layoutX="465.0" layoutY="249.0" mnemonicParsing="false" text="legjobb hang" />
+                                <Separator layoutX="195.0" layoutY="48.0" prefWidth="200.0" />
+                                <Separator layoutX="14.0" layoutY="531.0" prefWidth="200.0" />
+                                <Label fx:id="plistLabel" layoutX="16.0" layoutY="295.0" text="Lejátszási lista linkje: ">
+                                    <font>
+                                        <Font size="18.0" />
+                                    </font>
+                                </Label>
+                                <TextField id="playlistLink" fx:id="playlistLink" layoutX="182.0" layoutY="278.0" prefHeight="61.0" prefWidth="299.0" promptText="https://www.youtube.com/playlist?list=vmi" />
+                                <Button fx:id="listButton" layoutX="485.0" layoutY="282.0" mnemonicParsing="false" onAction="#convertList" prefHeight="54.0" prefWidth="100.0" text="Konvertálás" />
+                                <RadioButton fx:id="listVid" layoutX="503.0" layoutY="353.0" mnemonicParsing="false" text="Videó" />
+                                <RadioButton fx:id="listAudio" layoutX="505.0" layoutY="387.0" mnemonicParsing="false" text="Hang" />
+                                <Label id="outputLabel" fx:id="outputLabel" layoutX="29.0" layoutY="128.0" prefHeight="136.0" prefWidth="359.0" textAlignment="JUSTIFY" wrapText="true">
+                                    <font>
+                                        <Font size="18.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                        </Pane>
+                    </content>
+                </Tab>
+                <Tab id="historyTab" fx:id="historyTab" text="Előzmények">
+                    <content>
+                        <SplitPane id="historyPane" fx:id="historyPane" dividerPositions="0.29797979797979796" prefHeight="160.0" prefWidth="200.0">
+                            <items>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                    <children>
+                                        <StackPane prefHeight="611.0" prefWidth="175.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                    </children>
+                                </AnchorPane>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                    <children>
+                                        <Pane prefHeight="611.0" prefWidth="417.0">
+                                            <children>
+                                                <TableView id="table" fx:id="table" editable="true" prefHeight="424.0" prefWidth="421.0">
+                                                    <placeholder>
+                                                        <Label text="Nincsenek Előzmények" />
+                                                    </placeholder>
+                                                    <columns>
+                                                    </columns>
+                                                </TableView>
+                                            </children>
+                                        </Pane>
+                                    </children>
+                                </AnchorPane>
+                            </items>
+                        </SplitPane>
+                    </content>
+                </Tab>
+                <Tab id="settingsTab" fx:id="settingsTab" text="Beállítások">
+                    <content>
+                        <Pane id="settingsPane" fx:id="settingsPane" prefHeight="200.0" prefWidth="200.0">
+                            <children>
+                                <ColorPicker id="mainBgPicker" fx:id="mainBgPicker" layoutX="125.0" layoutY="154.0" />
+                                <Button layoutX="14.0" layoutY="557.0" mnemonicParsing="false" onAction="#save" prefHeight="37.0" prefWidth="81.0" text="Mentés" />
+                                <Label layoutX="12.0" layoutY="74.0" prefHeight="27.0" prefWidth="148.0" text="Személyreszabás">
+                                    <font>
+                                        <Font name="System Bold" size="18.0" />
+                                    </font>
+                                </Label>
+                                <Label layoutX="232.0" layoutY="14.0" prefHeight="43.0" prefWidth="136.0" text="Beállítások" textAlignment="CENTER">
+                                    <font>
+                                        <Font size="24.0" />
+                                    </font>
+                                </Label>
+                                <Button layoutX="285.0" layoutY="554.0" mnemonicParsing="false" onAction="#restoreSettingA" prefHeight="43.0" prefWidth="301.0" text="Alapértelmezett Beállítások Visszaállítása" />
+                                <Pane id="surePane" fx:id="surePane" layoutX="91.0" layoutY="140.0" prefHeight="270.0" prefWidth="420.0" visible="false">
+                                    <children>
+                                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="274.0" stroke="BLACK" strokeType="INSIDE" width="423.0" />
+                                        <Label layoutX="21.0" layoutY="14.0" prefHeight="142.0" prefWidth="378.0" text="Biztos vagy benne, hogy visszaállítod a beállításokat?" textAlignment="JUSTIFY" wrapText="true">
+                                            <font>
+                                                <Font name="System Bold" size="24.0" />
+                                            </font>
+                                        </Label>
+                                        <Button layoutX="38.0" layoutY="179.0" mnemonicParsing="false" onAction="#restoreSettingA1" prefHeight="43.0" prefWidth="93.0" text="Nem">
+                                            <font>
+                                                <Font size="18.0" />
+                                            </font>
+                                        </Button>
+                                        <Button layoutX="283.0" layoutY="179.0" mnemonicParsing="false" onAction="#restoreSettingA2" prefHeight="43.0" prefWidth="100.0" text="Igen" />
+                                    </children>
+                                </Pane>
+                                <Label layoutX="14.0" layoutY="406.0" prefHeight="43.0" prefWidth="221.0" text="Az ablak újraméretezhető:">
+                                    <font>
+                                        <Font size="18.0" />
+                                    </font>
+                                </Label>
+                                <Separator layoutX="185.0" layoutY="56.0" prefWidth="200.0" />
+                                <Separator layoutX="14.0" layoutY="524.0" prefHeight="0.0" prefWidth="572.0" />
+                                <ToggleButton id="toggleNem" fx:id="toggleNem" layoutX="235.0" layoutY="412.0" mnemonicParsing="false" onAction="#setResizeableF" selected="true" text="Nem" />
+                                <ToggleButton id="toggleIgen" fx:id="toggleIgen" layoutX="307.0" layoutY="412.0" mnemonicParsing="false" onAction="#setResizeableT" text="Igen" />
+                                <Label layoutX="14.0" layoutY="477.0" text="youtube-dl.exe útvonala: ">
+                                    <font>
+                                        <Font size="18.0" />
+                                    </font>
+                                </Label>
+                                <TextField id="ytdlpath" fx:id="ytdlpath" layoutX="214.0" layoutY="475.0" prefHeight="31.0" prefWidth="255.0" />
+                                <Button layoutX="481.0" layoutY="475.0" mnemonicParsing="false" onAction="#browseYTdlEXE" prefHeight="31.0" prefWidth="27.0" text="..." />
+                                <Button id="downloadButton" fx:id="downloadButton" contentDisplay="GRAPHIC_ONLY" layoutX="518.0" layoutY="475.0" mnemonicParsing="false" onAction="#handleDownload" prefHeight="31.0" prefWidth="42.0" />
+                                <Pane layoutX="41.0" layoutY="101.0" prefHeight="348.0" prefWidth="519.0" visible="false">
+                                    <children>
+                                        <Label layoutX="43.0" layoutY="75.0" prefHeight="99.0" prefWidth="408.0" text="Label" />
+                                    </children>
+                                </Pane>
+                                <Label layoutX="12.0" layoutY="151.0" prefHeight="38.0" prefWidth="85.0" text="Letöltés:">
+                                    <font>
+                                        <Font size="18.0" />
+                                    </font>
+                                </Label>
+                                <Separator layoutX="12.0" layoutY="108.0" prefWidth="200.0" />
+                                <Label layoutX="12.0" layoutY="199.0" text="Előzmények: ">
+                                    <font>
+                                        <Font size="18.0" />
+                                    </font>
+                                </Label>
+                                <ColorPicker id="historyBgPicker" fx:id="historyBgPicker" layoutX="125.0" layoutY="197.0" />
+                                <ColorPicker id="settingsBgPicker" fx:id="settingsBgPicker" layoutX="125.0" layoutY="238.0" />
+                                <Label layoutX="8.0" layoutY="240.0" text="Beállítások: ">
+                                    <font>
+                                        <Font size="18.0" />
+                                    </font>
+                                </Label>
+                                <Label layoutX="14.0" layoutY="360.0" text="Egyéb">
+                                    <font>
+                                        <Font name="System Bold" size="18.0" />
+                                    </font>
+                                </Label>
+                                <Separator layoutX="11.0" layoutY="397.0" prefWidth="200.0" />
+                                <Label layoutX="18.0" layoutY="113.0" text="Sötét mód: ">
+                                    <font>
+                                        <Font size="18.0" />
+                                    </font>
+                                </Label>
+                                <ToggleButton fx:id="darkOn" layoutX="123.0" layoutY="111.0" mnemonicParsing="false" text="Bekapcsolva" />
+                                <ToggleButton fx:id="darkOff" layoutX="271.0" layoutY="111.0" mnemonicParsing="false" text="Kikapcsolva" />
+                        <Label layoutX="14.0" layoutY="285.0" text="Kimenet:">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <ColorPicker fx:id="outBgPicker" layoutX="125.0" layoutY="283.0" />
+                            </children>
+                        </Pane>
+                    </content>
+                </Tab>
+            <Tab fx:id="outTab" text="Kimenet">
+               <content>
+                  <ScrollPane fx:id="outPane" prefHeight="200.0" prefWidth="200.0">
+                     <content>
+                        <AnchorPane prefHeight="614.0" prefWidth="600.0">
+                           <children>
+                              <Label id="outLabel" fx:id="outLabel" layoutX="169.0" layoutY="65.0" prefHeight="614.0" prefWidth="600.0" text="Label" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </ScrollPane>
+               </content>
+            </Tab>
+            </tabs>
+        </TabPane>
+    </children>
+
+</AnchorPane>
