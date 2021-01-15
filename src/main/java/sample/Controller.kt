@@ -38,45 +38,83 @@ class Controller : Initializable {
     val home:String = System.getProperty("user.home")
     val fxScope:CoroutineScope = CoroutineScope(Job() + Dispatchers.JavaFx)
 
-    @FXML var path = TextField(home + "\\Downloads")
-    @FXML var link = TextField()
-    @FXML var errPane = Pane()
-    @FXML var mainPane = Pane()
-    @FXML var historyPane = SplitPane()
-    @FXML val outPane = ScrollPane()
-    @FXML var errLabel = Label()
-    @FXML var outputLabel = Label()
-    @FXML val outLabel = Label()
-    @FXML var mainBgPicker:ColorPicker = ColorPicker()
-    @FXML var historyBgPicker:ColorPicker = ColorPicker()
-    @FXML var settingsBgPicker:ColorPicker = ColorPicker()
-    @FXML val outBgPicker:ColorPicker = ColorPicker()
-    @FXML var settingsPane = Pane()
-    @FXML var surePane = Pane()
-    @FXML var table: TableView<*> = TableView<Any?>()
-    @FXML var mp4 = RadioButton()
-    @FXML var mp3 = RadioButton()
-    @FXML var vidBest = RadioButton()
-    @FXML var audioBest = RadioButton()
-    @FXML var listVid = RadioButton()
-    @FXML var listAudio = RadioButton()
-    @FXML var toggleNem = ToggleButton()
-    @FXML var toggleIgen = ToggleButton()
-    @FXML var ytdlpath = TextField(pathToYTdlEXE)
-    @FXML var downloadButton = Button()
-    @FXML var settingsTab = Tab()
-    @FXML var mainTab = Tab()
-    @FXML var historyTab = Tab()
-    @FXML val outTab = Tab()
-    @FXML var playlistLink = TextField()
-    @FXML var listButton = Button()
-    @FXML var plistLabel = Label()
-    @FXML var vidLabel = Label()
-    @FXML var audioLabel = Label()
-    @FXML var darkOn = ToggleButton()
-    @FXML var darkOff = ToggleButton()
+    @FXML
+    val path = TextField(home + "\\Downloads")
+    @FXML
+    val link = TextField()
+    @FXML
+    val errPane = Pane()
+    @FXML
+    val mainPane = Pane()
+    @FXML
+    val historyPane = SplitPane()
+    @FXML
+    val outPane = ScrollPane()
+    @FXML
+    val errLabel = Label()
+    @FXML
+    val outputLabel = Label()
+    @FXML
+    val outLabel = Label()
+    @FXML
+    val mainBgPicker:ColorPicker = ColorPicker()
+    @FXML
+    val historyBgPicker:ColorPicker = ColorPicker()
+    @FXML
+    val settingsBgPicker:ColorPicker = ColorPicker()
+    @FXML
+    val outBgPicker:ColorPicker = ColorPicker()
+    @FXML
+    val settingsPane = Pane()
+    @FXML
+    var surePane = Pane()
+    @FXML
+    val table: TableView<*> = TableView<Any?>()
+    @FXML
+    val mp4 = RadioButton()
+    @FXML
+    val mp3 = RadioButton()
+    @FXML
+    val vidBest = RadioButton()
+    @FXML
+    val audioBest = RadioButton()
+    @FXML
+    val listVid = RadioButton()
+    @FXML
+    val listAudio = RadioButton()
+    @FXML
+    val toggleNem = ToggleButton()
+    @FXML
+    val toggleIgen = ToggleButton()
+    @FXML
+    val ytdlpath = TextField(pathToYTdlEXE)
+    @FXML
+    val downloadButton = Button()
+    @FXML
+    val settingsTab = Tab()
+    @FXML
+    val mainTab = Tab()
+    @FXML
+    val historyTab = Tab()
+    @FXML
+    val outTab = Tab()
+    @FXML
+    val playlistLink = TextField()
+    @FXML
+    val listButton = Button()
+    @FXML
+    val plistLabel = Label()
+    @FXML
+    val vidLabel = Label()
+    @FXML
+    val audioLabel = Label()
+    @FXML
+    val darkOn = ToggleButton()
+    @FXML
+    val darkOff = ToggleButton()
 
-    @FXML fun handleBrowse() {
+    @FXML
+    fun handleBrowse() {
         println("handleBrowse")
         val dirChooser = DirectoryChooser()
         dirChooser.title = "Cél mappa tallózása"
@@ -85,7 +123,8 @@ class Controller : Initializable {
             path.text = file.toString()
         }
     }
-    @FXML fun convertAct() {
+    @FXML
+    fun convertAct() {
         val array = format.selectedToggle.toString().split("'".toRegex()).toTypedArray()
         println("convertAct")
         if (link.text.isEmpty()) {
@@ -101,7 +140,8 @@ class Controller : Initializable {
             cmd(array[1])
         }
     }
-    @FXML fun convertList() {
+    @FXML
+    fun convertList() {
         val array = listFormat.selectedToggle.toString().split("'".toRegex()).toTypedArray()
         if (playlistLink.text.isEmpty()) {
             errPaner("Nem lehet üres")
@@ -114,7 +154,8 @@ class Controller : Initializable {
             }
         }
     }
-    @FXML fun handleOk() {
+    @FXML
+    fun handleOk() {
         errPane.isVisible = false
         playlistLink.isVisible = true
         listButton.isVisible = true
@@ -128,23 +169,28 @@ class Controller : Initializable {
         vidLabel.isVisible = true
         mainPane.opacity = 1.0
     }
-    @FXML fun restoreSettingA() { surePane.isVisible = true }
-    @FXML fun restoreSettingA1() { surePane.isVisible = false }
-    @FXML fun restoreSettingA2() {
+    @FXML
+    fun restoreSettingA() { surePane.isVisible = true }
+    @FXML
+    fun restoreSettingA1() { surePane.isVisible = false }
+    @FXML
+    fun restoreSettingA2() {
         Writer.bufferedWriter("0xffffffff;", "$workDir\\src\\main\\java\\assets\\mainBg.txt")
         Writer.bufferedWriter("0xffffffff;", "$workDir\\src\\main\\java\\assets\\historyBg.txt")
         Writer.bufferedWriter("0xffffffff;", "$workDir\\src\\main\\java\\assets\\settingsBg.txt")
         surePane.isVisible = false
         loadSetts()
     }
-    @FXML fun save() {
+    @FXML
+    fun save() {
         Writer.bufferedWriter(mainBgPicker.value.toString(), "$workDir\\src\\main\\java\\assets\\mainBg.txt")
         Writer.bufferedWriter(historyBgPicker.value.toString(), "$workDir\\src\\main\\java\\assets\\historyBg.txt")
         Writer.bufferedWriter(settingsBgPicker.value.toString(), "$workDir\\src\\main\\java\\assets\\settingsBg.txt")
         System.err.println("Main: ${read("mainBg")}\nHistory: ${read("historyBg")}Settings: ${read("settingsBg")}")
         loadSetts()
     }
-    @FXML fun browseYTdlEXE() {
+    @FXML
+    fun browseYTdlEXE() {
         val fileChooser = FileChooser()
         fileChooser.initialFileName = "youtube-dl.exe"
         fileChooser.title = "youtube-dl.exe tallózása"
@@ -158,9 +204,12 @@ class Controller : Initializable {
             ytdlpath.text = file.toString()
         }
     }
-    @FXML fun setResizeableT() { Main.stage.isResizable = true }
-    @FXML fun setResizeableF() { Main.stage.isResizable = false }
-    @FXML fun handleDownload() {
+    @FXML
+    fun setResizeableT() { Main.stage.isResizable = true }
+    @FXML
+    fun setResizeableF() { Main.stage.isResizable = false }
+    @FXML
+    fun handleDownload() {
         val hostServices = HostServicesFactory.getInstance(Main())
         hostServices.showDocument("https://youtube-dl.org/")
     }
@@ -392,7 +441,6 @@ internal object Writer {
             ex.printStackTrace()
         }
     }
-
     fun withoutOverwrite(text: String?, path: String?) {
         val log = File(path)
         try {
