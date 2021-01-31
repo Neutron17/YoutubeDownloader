@@ -1,6 +1,7 @@
 # YoutubeDownloader
 Youtube video, audio and playlist downloader with gui and multithreading in Java </br>
 # Used software:
+- Youtube-dl
 - Javafx
 - Kotlin
 - Kotlinx-Coroutines
