@@ -12,7 +12,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = null;
-        System.out.println(System.getProperty("user.dir")+"\\src\\main\\resources\\sample.fxml");
+        System.out.println("C:\\User\\sando\\IdeaProject\\ytdKt2\\src\\main\\resources\\sample.fxml");
         root = FXMLLoader.load(getClass().getResource("/sample.fxml"));
         stage = primaryStage;
         stage.setTitle("Youtube videó letöltő");

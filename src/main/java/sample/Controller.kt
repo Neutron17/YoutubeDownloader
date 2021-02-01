@@ -410,7 +410,7 @@ class Controller : Initializable {
     fun read(name: String): String {
         println("read")
         try {
-            val file = File("$workDir\\src\\main\\java\\assets\\$name.txt")
+            val file = File("C:\\Users\\sando\\IdeaProjects\\ytdKt2\\src\\main\\java\\assets\\$name.txt")
             val sc = Scanner(file)
             while (sc.hasNextLine()) {
                 val data = sc.nextLine()
