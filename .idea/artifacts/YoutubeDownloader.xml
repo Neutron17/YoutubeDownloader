@@ -1,0 +1,24 @@
+<component name="ArtifactManager">
+  <artifact type="javafx" name="YoutubeDownloader">
+    <output-path>$PROJECT_DIR$/out/artifacts/YoutubeDownloader</output-path>
+    <root id="root">
+      <element id="archive" name="YoutubeDownloader.jar">
+        <element id="module-output" name="ytdKt2" />
+        <element id="library" level="project" name="KotlinJavaRuntime" />
+        <element id="library" level="project" name="Maven: org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2" />
+        <element id="library" level="project" name="Maven: org.jetbrains.kotlin:kotlin-stdlib:1.4.0" />
+        <element id="library" level="project" name="Maven: org.jetbrains:annotations:13.0" />
+        <element id="library" level="project" name="Maven: org.jetbrains.kotlin:kotlin-stdlib-common:1.4.0" />
+        <element id="library" level="project" name="Maven: org.jetbrains.kotlinx:kotlinx-coroutines-javafx:1.4.2" />
+        <element id="library" level="project" name="Maven: org.openjfx:javafx-fxml:11.0.1" />
+        <element id="library" level="project" name="Maven: org.openjfx:javafx-fxml:win:11.0.1" />
+        <element id="library" level="project" name="Maven: org.openjfx:javafx-controls:11.0.1" />
+        <element id="library" level="project" name="Maven: org.openjfx:javafx-controls:win:11.0.1" />
+        <element id="library" level="project" name="Maven: org.openjfx:javafx-graphics:11.0.1" />
+        <element id="library" level="project" name="Maven: org.openjfx:javafx-graphics:win:11.0.1" />
+        <element id="library" level="project" name="Maven: org.openjfx:javafx-base:11.0.1" />
+        <element id="library" level="project" name="Maven: org.openjfx:javafx-base:win:11.0.1" />
+      </element>
+    </root>
+  </artifact>
+</component>

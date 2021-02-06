@@ -157,9 +157,9 @@ class Controller : Initializable {
     @FXML fun restoreSettingA1() { surePane.isVisible = false }
     @FXML
     fun restoreSettingA2() {
-        Writer.bufferedWriter("0xffffffff;", "$workDir\\src\\main\\java\\assets\\mainBg.txt")
-        Writer.bufferedWriter("0xffffffff;", "$workDir\\src\\main\\java\\assets\\historyBg.txt")
-        Writer.bufferedWriter("0xffffffff;", "$workDir\\src\\main\\java\\assets\\settingsBg.txt")
+        Writer.bufferedWriter("0xffffffff", "$workDir\\src\\main\\java\\assets\\mainBg.txt")
+        Writer.bufferedWriter("0xffffffff", "$workDir\\src\\main\\java\\assets\\historyBg.txt")
+        Writer.bufferedWriter("0xffffffff", "$workDir\\src\\main\\java\\assets\\settingsBg.txt")
         surePane.isVisible = false
         loadSetts()
     }
@@ -184,6 +184,7 @@ class Controller : Initializable {
         Writer.bufferedWriter(historyBgPicker.value.toString(), "$workDir\\src\\main\\java\\assets\\historyBg.txt")
         Writer.bufferedWriter(settingsBgPicker.value.toString(), "$workDir\\src\\main\\java\\assets\\settingsBg.txt")
         System.err.println("Main: ${read("mainBg")}\nHistory: ${read("historyBg")}Settings: ${read("settingsBg")}")
+
         loadSetts()
     }
 
@@ -369,7 +370,6 @@ class Controller : Initializable {
         toggleNem.isSelected = true
         mp4.isSelected = true
     }
-
     fun loadSetts() {
         mainBgPicker.value = Color.valueOf(read("mainBg"))
         historyBgPicker.value = Color.valueOf(read("historyBg"))
@@ -380,8 +380,11 @@ class Controller : Initializable {
         mainPane.style = "-fx-background-color: #" + read("mainBg").split("x")[1] + ";"
         historyPane.style = "-fx-background-color: #" + read("historyBg").split("x")[1] + ";"
         settingsPane.style = "-fx-background-color: #" + read("settingsBg").split("x")[1] + ";"
+        if (darkMode.selectedToggle == darkOn) {
+            println("dark")
+            Main.scene.stylesheets.add("/styles/foo.css")
+        }
     }
-
     fun defaultVisibility() {
         mainPane.isVisible = true
         mainPane.opacity = 1.0
