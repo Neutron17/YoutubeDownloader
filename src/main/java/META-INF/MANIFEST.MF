@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Main-Class: sample.Launcher
+Class-Path: javafx-base-11.0.1-win.jar kotlinx-coroutines-javafx-1.4.2.j
+ ar javafx-graphics-11.0.1-win.jar javafx-controls-11.0.1-win.jar kotlin
+ -stdlib-1.4.0.jar javafx-controls-11.0.1.jar kotlin-stdlib-common-1.4.0
+ .jar javafx-fxml-11.0.1.jar javafx-base-11.0.1.jar javafx-fxml-11.0.1-w
+ in.jar annotations-13.0.jar kotlinx-coroutines-core-1.4.2.jar kotlin-st
+ dlib.jar kotlin-reflect.jar kotlin-test.jar kotlin-stdlib-jdk7.jar kotl
+ in-stdlib-jdk8.jar javafx-graphics-11.0.1.jar
+
