@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.shape.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.*?>
+
 <AnchorPane prefHeight="650" prefWidth="600" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
     <children>
         <TabPane layoutX="147.0" layoutY="174.0" prefHeight="650.0" prefWidth="750.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -89,34 +92,6 @@
                         </Pane>
                     </content>
                 </Tab>
-                <Tab id="historyTab" fx:id="historyTab" text="Előzmények">
-                    <content>
-                        <SplitPane id="historyPane" fx:id="historyPane" dividerPositions="0.29797979797979796" prefHeight="160.0" prefWidth="200.0">
-                            <items>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
-                                    <children>
-                                        <StackPane prefHeight="611.0" prefWidth="175.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                    </children>
-                                </AnchorPane>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
-                                    <children>
-                                        <Pane prefHeight="611.0" prefWidth="417.0">
-                                            <children>
-                                                <TableView id="table" fx:id="table" editable="true" prefHeight="424.0" prefWidth="421.0">
-                                                    <placeholder>
-                                                        <Label text="Nincsenek Előzmények" />
-                                                    </placeholder>
-                                                    <columns>
-                                                    </columns>
-                                                </TableView>
-                                            </children>
-                                        </Pane>
-                                    </children>
-                                </AnchorPane>
-                            </items>
-                        </SplitPane>
-                    </content>
-                </Tab>
                 <Tab id="settingsTab" fx:id="settingsTab" text="Beállítások">
                     <content>
                         <Pane id="settingsPane" fx:id="settingsPane" prefHeight="200.0" prefWidth="200.0">
@@ -178,12 +153,6 @@
                                     </font>
                                 </Label>
                                 <Separator layoutX="12.0" layoutY="108.0" prefWidth="200.0" />
-                                <Label layoutX="13.0" layoutY="248.0" text="Előzmények: ">
-                                    <font>
-                                        <Font size="18.0" />
-                                    </font>
-                                </Label>
-                                <ColorPicker id="historyBgPicker" fx:id="historyBgPicker" layoutX="125.0" layoutY="246.0" />
                                 <ColorPicker id="settingsBgPicker" fx:id="settingsBgPicker" layoutX="125.0" layoutY="298.0" />
                                 <Label layoutX="18.0" layoutY="300.0" text="Beállítások: ">
                                     <font>

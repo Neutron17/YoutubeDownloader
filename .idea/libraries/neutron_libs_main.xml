@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="neutron-libs.main">
+    <CLASSES>
+      <root url="jar://E:/Dev/neutron-libs/out/artifacts/neutron_libs_main_jar/neutron-libs.main.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

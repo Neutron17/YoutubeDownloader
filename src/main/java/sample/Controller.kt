@@ -3,32 +3,26 @@ package sample
 import com.sun.deploy.uitoolkit.impl.fx.HostServicesFactory
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
-import javafx.scene.Scene
 import javafx.scene.control.*
 import javafx.scene.image.Image
 import javafx.scene.image.ImageView
 import javafx.scene.layout.Pane
 import javafx.scene.paint.Color
-import javafx.scene.text.Font
 import javafx.stage.DirectoryChooser
 import javafx.stage.FileChooser
-import javafx.stage.Stage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.javafx.JavaFx
 import kotlinx.coroutines.launch
+import java.awt.AWTException
+import java.awt.SystemTray
+import java.awt.Toolkit
+import java.awt.TrayIcon
+import java.awt.TrayIcon.MessageType
 import java.io.*
 import java.net.URL
 import java.util.*
-import java.awt.TrayIcon.MessageType
-
-import java.awt.TrayIcon
-
-import java.awt.SystemTray
-
-import java.awt.AWTException
-import java.awt.Toolkit
 
 
 class Controller : Initializable {
@@ -48,11 +42,9 @@ class Controller : Initializable {
     @FXML var link = TextField()
     @FXML var errPane = Pane()
     @FXML var mainPane = Pane()
-    @FXML var historyPane = SplitPane()
     @FXML var errLabel = Label()
     @FXML var outputLabel = Label()
     @FXML var mainBgPicker = ColorPicker()
-    @FXML var historyBgPicker = ColorPicker()
     @FXML var settingsBgPicker = ColorPicker()
     @FXML var settingsPane = Pane()
     @FXML var surePane = Pane()
@@ -71,7 +63,6 @@ class Controller : Initializable {
     @FXML var downloadButton = Button()
     @FXML var settingsTab = Tab()
     @FXML var mainTab = Tab()
-    @FXML var historyTab = Tab()
     @FXML var playlistLink = TextField()
     @FXML var listButton = Button()
     @FXML var plistLabel = Label()
@@ -181,7 +172,6 @@ class Controller : Initializable {
     @FXML
     fun save() {
         Writer.bufferedWriter(mainBgPicker.value.toString(), "$workDir\\src\\main\\java\\assets\\mainBg.txt")
-        Writer.bufferedWriter(historyBgPicker.value.toString(), "$workDir\\src\\main\\java\\assets\\historyBg.txt")
         Writer.bufferedWriter(settingsBgPicker.value.toString(), "$workDir\\src\\main\\java\\assets\\settingsBg.txt")
         System.err.println("Main: ${read("mainBg")}\nHistory: ${read("historyBg")}Settings: ${read("settingsBg")}")
 
@@ -372,13 +362,10 @@ class Controller : Initializable {
     }
     fun loadSetts() {
         mainBgPicker.value = Color.valueOf(read("mainBg"))
-        historyBgPicker.value = Color.valueOf(read("historyBg"))
         settingsBgPicker.value = Color.valueOf(read("settingsBg"))
         mainTab.style = "-fx-background-color: #" + read("mainBg").split("x")[1] + ";"
-        historyTab.style = "-fx-background-color: #" + read("historyBg").split("x")[1] + ";"
         settingsTab.style = "-fx-background-color: #" + read("settingsBg").split("x")[1] + ";"
         mainPane.style = "-fx-background-color: #" + read("mainBg").split("x")[1] + ";"
-        historyPane.style = "-fx-background-color: #" + read("historyBg").split("x")[1] + ";"
         settingsPane.style = "-fx-background-color: #" + read("settingsBg").split("x")[1] + ";"
         if (darkMode.selectedToggle == darkOn) {
             println("dark")

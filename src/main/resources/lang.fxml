@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="250.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Lang">
+    <ToggleButton layoutX="204.0" layoutY="80.0" text="hu" AnchorPane.leftAnchor="204.0" AnchorPane.rightAnchor="116.4" />
+    <ToggleButton layoutX="116.0" layoutY="80.0" text="en" AnchorPane.leftAnchor="116.0" AnchorPane.rightAnchor="204.0" />
+    <Button layoutY="223.0" text="SUBMIT" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+</AnchorPane>
