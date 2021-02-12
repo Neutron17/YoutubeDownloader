@@ -118,12 +118,12 @@
                                                 <Font name="System Bold" size="24.0" />
                                             </font>
                                         </Label>
-                                        <Button defaultButton="true" layoutX="38.0" layoutY="179.0" mnemonicParsing="false" onAction="#restoreSettingA1" prefHeight="43.0" prefWidth="93.0" text="No">
+                                        <Button defaultButton="true" layoutX="38.0" layoutY="179.0" mnemonicParsing="false" onAction="#restoreSettingNo" prefHeight="43.0" prefWidth="93.0" text="No">
                                             <font>
                                                 <Font size="18.0" />
                                             </font>
                                         </Button>
-                                        <Button layoutX="283.0" layoutY="179.0" mnemonicParsing="false" onAction="#restoreSettingA2" prefHeight="43.0" prefWidth="100.0" text="Yes" />
+                                        <Button layoutX="283.0" layoutY="179.0" mnemonicParsing="false" onAction="#restoreSettingYes" prefHeight="43.0" prefWidth="100.0" text="Yes" />
                                     </children>
                                 </Pane>
                                 <Label layoutX="14.0" layoutY="406.0" prefHeight="43.0" prefWidth="221.0" text="Is window resizable:">

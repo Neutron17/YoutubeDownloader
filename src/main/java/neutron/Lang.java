@@ -11,6 +11,9 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class Lang extends Application {
+    private Scene scene;
+    public static boolean isEnglish;
+
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setWidth(350);
@@ -42,10 +45,13 @@ public class Lang extends Application {
 
         submit.setOnAction(event -> {
             if (en.isSelected()) {
-                Main.en(primaryStage);
+                isEnglish = true;
+                neutron.Main.scene = this.scene;
+                neutron.Main.en(new Stage());
                 primaryStage.close();
             }else if(hu.isSelected()) {
-                Main.hu(primaryStage);
+                isEnglish = false;
+                neutron.Main.hu(new Stage());
                 primaryStage.close();
             }else {
                 Stage stage = new Stage();
@@ -54,7 +60,7 @@ public class Lang extends Application {
             }
         });
         pane.getChildren().addAll(submit,en,hu);
-        Scene scene = new Scene(pane);
+        scene = new Scene(pane);
         primaryStage.setScene(scene);
         primaryStage.show();
     }

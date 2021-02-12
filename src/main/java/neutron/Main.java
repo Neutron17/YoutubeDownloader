@@ -12,7 +12,7 @@ public class Main extends Application {
     public static Scene scene;
     @Override
     public void start(Stage primaryStage) throws Exception{
-        new Lang().start(new Stage());
+        new neutron.Lang().start(new Stage());
     }
     public static void en(Stage primaryStage) {
         try {
