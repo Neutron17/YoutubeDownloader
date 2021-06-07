@@ -13,11 +13,8 @@ import javafx.scene.text.Font
 import javafx.stage.DirectoryChooser
 import javafx.stage.FileChooser
 import javafx.stage.Stage
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
+import kotlinx.coroutines.*
 import kotlinx.coroutines.javafx.JavaFx
-import kotlinx.coroutines.launch
 import java.io.*
 import java.net.URL
 import java.util.*
@@ -29,10 +26,10 @@ import java.awt.SystemTray
 
 import java.awt.AWTException
 import java.awt.Toolkit
+import java.lang.Runnable
 
 
 class Controller : Initializable {
-    var workDir =  System.getProperty("user.dir")
     var status = ""
     var finished = false
     var type = ""
@@ -40,7 +37,13 @@ class Controller : Initializable {
     var resizeable = ToggleGroup()
     var listFormat = ToggleGroup()
     var darkMode = ToggleGroup()
-    var pathToYTdlEXE = "$workDir\\src\\main\\java\\assets\\youtube-dl.exe"
+    @Volatile
+    var isPathChanged = false
+    var pathToYTdlEXE = "youtube-dl"//"$workDir\\src\\main\\java\\assets\\youtube-dl.exe"
+        set(value) {
+            isPathChanged = true
+            field = value
+        } // -Dfile.encoding=windows-1250
     val home:String = System.getProperty("user.home")
     val fxScope:CoroutineScope = CoroutineScope(Job() + Dispatchers.JavaFx)
 
@@ -188,7 +191,7 @@ class Controller : Initializable {
     }
 
     fun findYtDl() {
-        val f = File(home + "\\Documents")
+        val f = File("$home\\Documents")
         val matchingFiles = f.listFiles { dir: File?, name: String -> name.startsWith("youtube-dl") && name.endsWith("exe") }
         for (i in matchingFiles!!) {
             println(i.toString())
@@ -234,14 +237,20 @@ class Controller : Initializable {
                 System.err.println(type)
                 println("Type: $type\nLink: ${link.text}\nPath: ${path.text}\nOutput Label: $outputLabel")
                 val builder = ProcessBuilder()
-                when (type) {
+                builder.environment().put("LANG", "hu_HU.UTF-8")
+                wh@when (type) {
                     "mp4" -> {
                         println("mp4")
+                        //if(!isPathChanged) {
+                          //  builder.command("cmd.exe", "/c", "$pathToYTdlEXE -f mp4 -o %USERPROFILE%\\Downloads")
+                        //}else{
+                            System.err.println("ELSE")
                         builder.command(
                             "cmd.exe",
                             "/c",
-                            pathToYTdlEXE + " -f mp4 -o ${path.text}\\%(title)s.%(ext)s  " + link.text
+                            "chcp 65001 && $pathToYTdlEXE -f mp4 -o ${path.text}\\%(title)s.%(ext)s  " + link.text
                         )
+                        //}
                     }
                     "mp3" -> {
                         println("mp3")
@@ -249,7 +258,7 @@ class Controller : Initializable {
                         builder.command(
                             "cmd.exe",
                             "/c",
-                            pathToYTdlEXE + " -x --audio-format mp3 -o ${path.text}\\%(title)s.%(ext)s " + link.text
+                            "chcp 65001 && $pathToYTdlEXE -x --audio-format mp3 -o ${path.text}\\%(title)s.%(ext)s " + link.text
                         )
                         builder.directory(File(home + "\\Downloads"))
                     }
@@ -258,7 +267,7 @@ class Controller : Initializable {
                         builder.command(
                             "cmd.exe",
                             "/c",
-                            pathToYTdlEXE + " -f best -o ${path.text}\\%(title)s.%(ext)s " + playlistLink.text
+                            "chcp 65001 && $pathToYTdlEXE -f best -o ${path.text}\\%(title)s.%(ext)s " + link.text
                         )
                     }
                     "legjobb hang" -> {
@@ -266,7 +275,7 @@ class Controller : Initializable {
                         builder.command(
                             "cmd.exe",
                             "/c",
-                            pathToYTdlEXE + " -x -f best -o ${path.text}\\%(title)s.%(ext)s " + playlistLink.text
+                            "chcp 65001 && $pathToYTdlEXE -x -f best -o ${path.text}\\%(title)s.%(ext)s " + link.text
                         )
                     }
                     "Videó" -> {
@@ -274,7 +283,7 @@ class Controller : Initializable {
                         builder.command(
                                 "cmd.exe",
                                 "/c",
-                                "$pathToYTdlEXE -o ${path.text}\\%(title)s.%(ext)s ${playlistLink.text}"
+                                "chcp 65001 && $pathToYTdlEXE -o ${path.text}\\%(title)s.%(ext)s ${playlistLink.text}"
                         )
                     }
                     "Videó(mp4)" -> {
@@ -282,7 +291,7 @@ class Controller : Initializable {
                         builder.command(
                                 "cmd.exe",
                                 "/c",
-                                "$pathToYTdlEXE -f mp4 -o ${path.text}\\%(title)s.%(ext)s ${playlistLink.text}"
+                                "chcp 65001 && $pathToYTdlEXE -f mp4 -o ${path.text}\\%(title)s.%(ext)s ${playlistLink.text}"
                         )
                     }
                     "Hang" -> {
@@ -290,7 +299,7 @@ class Controller : Initializable {
                         builder.command(
                                 "cmd.exe",
                                 "/c",
-                                "$pathToYTdlEXE --extract-audio -o ${path.text}\\%(title)s.%(ext)s ${playlistLink.text}"
+                                "chcp 65001 && $pathToYTdlEXE --extract-audio -o ${path.text}\\%(title)s.%(ext)s ${playlistLink.text}"
                         )
                     }
                     "Hang(mp3)" -> {
@@ -298,7 +307,7 @@ class Controller : Initializable {
                         builder.command(
                                 "cmd.exe",
                                 "/c",
-                                "$pathToYTdlEXE --extract-audio --audio-format mp3 -o ${path.text}\\%(title)s.%(ext)s ${playlistLink.text}"
+                                "chcp 65001 && $pathToYTdlEXE --extract-audio --audio-format mp3 -o ${path.text}\\%(title)s.%(ext)s ${playlistLink.text}"
                         )
                     }
 
@@ -443,12 +452,14 @@ class Controller : Initializable {
     }
 
     companion object {
+        fun staticCMD() { TODO() }
+        var workDir =  System.getProperty("user.dir")
         val home = System.getProperty("user.home")
     }
 }
 
 internal object Writer {
-    private val workDir = "C:\\Users\\Sándor\\IdeaProjects\\ytdKt2"
+    private val workDir = Controller.workDir
     fun bufferedWriter(text: String, path: String?) {
         try {
             val fos = FileOutputStream(path)

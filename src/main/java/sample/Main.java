@@ -23,5 +23,5 @@ public class Main extends Application {
         stage.show();
     }
 
-    public static void main(String[] args) { launch(args); }
+    public static void main(String[] args) { System.out.println("V1.2"); launch(args); }
 }
