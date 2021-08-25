@@ -17,6 +17,8 @@ import javafx.scene.image.Image
 import javafx.scene.image.ImageView
 import javafx.scene.layout.Pane
 import javafx.scene.paint.Color
+import javafx.scene.text.Font
+import javafx.scene.text.FontWeight
 import javafx.scene.text.Text
 import javafx.stage.DirectoryChooser
 import javafx.stage.FileChooser
@@ -147,22 +149,6 @@ class Controller : Initializable {
         }
     }
 
-    @FXML
-    fun handleOk() {
-        errPane.isVisible = false
-        playlistLink.isVisible = true
-        listButton.isVisible = true
-        plistLabel.isVisible = true
-        mp3.isVisible = true
-        mp4.isVisible = true
-        vidBest.isVisible = true
-        audioBest.isVisible = true
-        listVid.isVisible = true
-        audioLabel.isVisible = true
-        vidLabel.isVisible = true
-        mainPane.opacity = 1.0
-    }
-
     @FXML fun restoreSetting() {
         val wind = window("Reset settings", false, 400.0, 200.0, "/reset.fxml")
         Main.s = Shared(this, wind)
@@ -171,7 +157,8 @@ class Controller : Initializable {
     private fun errPaner(message: String?) {
         val stage = Stage()
         val txt = Label(message) // TODO Make text bigger
-        txt.style = "-fx-font-weight: bold;-fx-text-fill : red;"
+        txt.font = Font.font("System Bold", FontWeight.BOLD, 25.0)
+        txt.style += "-fx-text-fill : red;"
         stage.scene = Scene(Pane(txt))
         stage.show()
     }

@@ -52,21 +52,6 @@
                                         <Font size="14.0" />
                                     </font>
                                 </Button>
-                                <Pane id="errPane" fx:id="errPane" layoutX="29.0" layoutY="131.0" prefHeight="256.0" prefWidth="532.0" visible="false">
-                                    <children>
-                                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#929394" height="256.0" stroke="BLACK" strokeType="INSIDE" width="532.0" />
-                                        <Button id="okButt" layoutX="233.0" layoutY="189.0" mnemonicParsing="false" onAction="#handleOk" prefHeight="43.0" prefWidth="67.0" text="OK">
-                                            <font>
-                                                <Font size="18.0" />
-                                            </font>
-                                        </Button>
-                                        <Label id="errLabel" fx:id="errLabel" layoutX="107.0" layoutY="40.0" prefHeight="142.0" prefWidth="340.0" text="Error" textFill="#f50505">
-                                            <font>
-                                                <Font name="System Bold" size="18.0" />
-                                            </font>
-                                        </Label>
-                                    </children>
-                                </Pane>
                                 <RadioButton id="mp4" fx:id="mp4" layoutX="465.0" layoutY="142.0" mnemonicParsing="false" text="mp4" />
                                 <RadioButton id="mp3" fx:id="mp3" layoutX="461.0" layoutY="217.0" mnemonicParsing="false" text="mp3" />
                                 <Label id="mainText" fx:id="vidLabel" layoutX="399.0" layoutY="138.0" prefHeight="28.0" prefWidth="59.0" text="Videó: " />
