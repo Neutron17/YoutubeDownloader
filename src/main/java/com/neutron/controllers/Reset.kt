@@ -1,5 +1,7 @@
-package com.neutron
+package com.neutron.controllers
 
+import com.neutron.Main
+import com.neutron.Writer
 import javafx.fxml.FXML
 import javafx.scene.layout.AnchorPane
 

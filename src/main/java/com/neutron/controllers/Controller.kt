@@ -1,6 +1,9 @@
-package com.neutron
+package com.neutron.controllers
 
+import com.neutron.Main
 import com.neutron.Main.err
+import com.neutron.Shared
+import com.neutron.Writer
 import javafx.fxml.FXML
 import javafx.fxml.FXMLLoader
 import javafx.fxml.Initializable
@@ -14,6 +17,7 @@ import javafx.scene.image.Image
 import javafx.scene.image.ImageView
 import javafx.scene.layout.Pane
 import javafx.scene.paint.Color
+import javafx.scene.text.Text
 import javafx.stage.DirectoryChooser
 import javafx.stage.FileChooser
 import javafx.stage.Stage
@@ -109,7 +113,7 @@ class Controller : Initializable {
                 cmd(array[1])
             } else errPaner("Ez nem egy youtube videó linkje!")
         } else {
-            Writer.withoutOverwrite(link.text + ";", "$workDir\\assets\\path.txt") // TODO
+            Writer.withoutOverwrite(link.text + ";", "/path.txt") // TODO
             println(format.selectedToggle)
             cmd(array[1])
         }
@@ -165,18 +169,11 @@ class Controller : Initializable {
         wind.show()
     }
     private fun errPaner(message: String?) {
-        errPane.isVisible = true
-        playlistLink.isVisible = false
-        listButton.isVisible = false
-        plistLabel.isVisible = false
-        mp3.isVisible = false
-        mp4.isVisible = false
-        vidBest.isVisible = false
-        audioBest.isVisible = false
-        listVid.isVisible = false
-        audioLabel.isVisible = false
-        vidLabel.isVisible = false
-        errLabel.text = message
+        val stage = Stage()
+        val txt = Label(message) // TODO Make text bigger
+        txt.style = "-fx-font-weight: bold;-fx-text-fill : red;"
+        stage.scene = Scene(Pane(txt))
+        stage.show()
     }
 
     @FXML
@@ -189,8 +186,8 @@ class Controller : Initializable {
     }
 
     private fun findYtDl() {
-        val f = File("$home\\Documents")
-        val matchingFiles = f.listFiles { dir: File?, name: String -> name.startsWith("youtube-dl") && name.endsWith("exe") }
+        val f = File("$home/Documents")
+        val matchingFiles = f.listFiles { _: File?, name: String -> name.startsWith("youtube-dl") && name.endsWith("exe") }
         for (i in matchingFiles!!) {
             println(i.toString())
         }
@@ -221,7 +218,7 @@ class Controller : Initializable {
         }
     }
 
-    private fun cmd(type: String) {
+    private fun cmd(type: String) { // TODO Make it work for non windows systems
         println("cmd")
         println(path.toString() + "\t" + path.text)
         println(link.toString() + "\t" + path.text)
@@ -233,28 +230,24 @@ class Controller : Initializable {
                 System.err.println(type)
                 println("Type: $type\nLink: ${link.text}\nPath: ${path.text}\nOutput Label: $outputLabel")
                 val builder = ProcessBuilder()
-                builder.environment().put("LANG", "hu_HU.UTF-8")
+                builder.environment()["LANG"] = "hu_HU.UTF-8"
                 when (type) {
                     "mp4" -> {
                         println("mp4")
-                        //if(!isPathChanged) {
-                        //  builder.command("cmd.exe", "/c", "$pathToYTdlEXE -f mp4 -o %USERPROFILE%\\Downloads")
-                        //}else{
-                        System.err.println("ELSE")
                         builder.command(
                             "cmd.exe",
                             "/c",
-                            "chcp 65001 && $pathToYTdlEXE -f mp4 -o ${path.text}\\%(title)s.%(ext)s  " + link.text
+                            "chcp 65001 && $pathToYTdlEXE -f mp4 -o ${path.text}/%(title)s.%(ext)s  " + link.text
                         )
                         //}
                     }
                     "mp3" -> {
                         println("mp3")
-                        println(pathToYTdlEXE + " -x --audio-format mp3 -o ${path.text}\\%(title)s.%(ext)s " + link.text)
+                        println(pathToYTdlEXE + " -x --audio-format mp3 -o ${path.text}/%(title)s.%(ext)s " + link.text)
                         builder.command(
                             "cmd.exe",
                             "/c",
-                            "chcp 65001 && $pathToYTdlEXE -x --audio-format mp3 -o ${path.text}\\%(title)s.%(ext)s " + link.text
+                            "chcp 65001 && $pathToYTdlEXE -x --audio-format mp3 -o ${path.text}/%(title)s.%(ext)s " + link.text
                         )
                         builder.directory(File("$home/Downloads"))
                     }
@@ -263,7 +256,7 @@ class Controller : Initializable {
                         builder.command(
                             "cmd.exe",
                             "/c",
-                            "chcp 65001 && $pathToYTdlEXE -f best -o ${path.text}\\%(title)s.%(ext)s " + link.text
+                            "chcp 65001 && $pathToYTdlEXE -f best -o ${path.text}/%(title)s.%(ext)s " + link.text
                         )
                     }
                     "legjobb hang" -> {
@@ -271,7 +264,7 @@ class Controller : Initializable {
                         builder.command(
                             "cmd.exe",
                             "/c",
-                            "chcp 65001 && $pathToYTdlEXE -x -f best -o ${path.text}\\%(title)s.%(ext)s " + link.text
+                            "chcp 65001 && $pathToYTdlEXE -x -f best -o ${path.text}/%(title)s.%(ext)s " + link.text
                         )
                     }
                     "Videó" -> {
@@ -279,7 +272,7 @@ class Controller : Initializable {
                         builder.command(
                             "cmd.exe",
                             "/c",
-                            "chcp 65001 && $pathToYTdlEXE -o ${path.text}\\%(title)s.%(ext)s ${playlistLink.text}"
+                            "chcp 65001 && $pathToYTdlEXE -o ${path.text}/%(title)s.%(ext)s ${playlistLink.text}"
                         )
                     }
                     "Videó(mp4)" -> {
@@ -287,7 +280,7 @@ class Controller : Initializable {
                         builder.command(
                             "cmd.exe",
                             "/c",
-                            "chcp 65001 && $pathToYTdlEXE -f mp4 -o ${path.text}\\%(title)s.%(ext)s ${playlistLink.text}"
+                            "chcp 65001 && $pathToYTdlEXE -f mp4 -o ${path.text}/%(title)s.%(ext)s ${playlistLink.text}"
                         )
                     }
                     "Hang" -> {
@@ -295,7 +288,7 @@ class Controller : Initializable {
                         builder.command(
                             "cmd.exe",
                             "/c",
-                            "chcp 65001 && $pathToYTdlEXE --extract-audio -o ${path.text}\\%(title)s.%(ext)s ${playlistLink.text}"
+                            "chcp 65001 && $pathToYTdlEXE --extract-audio -o ${path.text}/%(title)s.%(ext)s ${playlistLink.text}"
                         )
                     }
                     "Hang(mp3)" -> {
@@ -303,7 +296,7 @@ class Controller : Initializable {
                         builder.command(
                             "cmd.exe",
                             "/c",
-                            "chcp 65001 && $pathToYTdlEXE --extract-audio --audio-format mp3 -o ${path.text}\\%(title)s.%(ext)s ${playlistLink.text}"
+                            "chcp 65001 && $pathToYTdlEXE --extract-audio --audio-format mp3 -o ${path.text}/%(title)s.%(ext)s ${playlistLink.text}"
                         )
                     }
 
@@ -385,7 +378,7 @@ class Controller : Initializable {
             historyBgPicker.value = Color.valueOf(history)
             settingsBgPicker.value = Color.valueOf(settings)
             mainTab.style = "-fx-background-color: #${main.split("x")[1]};"
-            historyTab.style = "-fx-background-color: #" + history.split("x")[1] + ";"
+            historyTab.style = "-fx-background-color: #${history.split("x")[1]};"
             settingsTab.style = "-fx-background-color: #" + settings.split("x")[1] + ";"
             mainPane.style = "-fx-background-color: #" + main.split("x")[1] + ";"
             historyPane.style = "-fx-background-color: #" + history.split("x")[1] + ";"

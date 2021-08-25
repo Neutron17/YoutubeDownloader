@@ -1,5 +1,6 @@
 package com.neutron;
 
+import com.neutron.controllers.Controller;
 import javafx.stage.Stage;
 
 public class Shared {

@@ -1,5 +1,6 @@
 package com.neutron
 
+import com.neutron.controllers.Controller
 import java.io.*
 
 internal object Writer {
@@ -18,8 +19,8 @@ internal object Writer {
         }
     }
 
-    fun withoutOverwrite(text: String?, path: String?) {
-        val log = File(path)
+    fun withoutOverwrite(text: String?, path: String) {
+        val log = File(this::class.java.getResource(path)!!.file)
         try {
             if (!log.exists()) {
                 println("We had to make a new file.")
