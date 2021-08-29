@@ -464,7 +464,7 @@ class Controller : Initializable {
             bufferedWriter(Json.encodeToString(SerializerData(
                 ColorSerializer(
                     "ffffffff", "ffffffff", "ffffffff"
-                ), Langs.EN
+                ), Langs.HU
             )), "/data.json")
         }
         var workDir: String = System.getProperty("user.dir")!!

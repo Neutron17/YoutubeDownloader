@@ -10,7 +10,12 @@ public class Shared {
     public SerializerData ser;
     public static TableView<Element> table;
     public Shared() {
-        this.ser = Controller.decode();}
+        try {
+            this.ser = Controller.decode();
+        }catch(Exception e) {
+            Controller.prep();
+        }
+    }
     public Shared(Controller c) {
         this.c = c;
     }
