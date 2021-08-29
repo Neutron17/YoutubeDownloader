@@ -1,9 +1,13 @@
 package com.neutron.controllers
 
-import com.neutron.Main
+import com.neutron.*
+import com.neutron.Main.db
 import com.neutron.Main.err
-import com.neutron.Shared
-import com.neutron.Writer
+import com.neutron.Writer.bufferedWriter
+import javafx.collections.FXCollections
+import javafx.collections.ObservableList
+import javafx.event.ActionEvent
+import javafx.event.EventHandler
 import javafx.fxml.FXML
 import javafx.fxml.FXMLLoader
 import javafx.fxml.Initializable
@@ -13,21 +17,26 @@ import javafx.scene.control.*
 import javafx.scene.control.Button
 import javafx.scene.control.Label
 import javafx.scene.control.TextField
+import javafx.scene.control.cell.PropertyValueFactory
+import javafx.scene.control.cell.TextFieldTableCell
 import javafx.scene.image.Image
 import javafx.scene.image.ImageView
 import javafx.scene.layout.Pane
 import javafx.scene.paint.Color
 import javafx.scene.text.Font
 import javafx.scene.text.FontWeight
-import javafx.scene.text.Text
 import javafx.stage.DirectoryChooser
 import javafx.stage.FileChooser
 import javafx.stage.Stage
+import javafx.util.Callback
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.javafx.JavaFx
 import kotlinx.coroutines.launch
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import java.awt.*
 import java.awt.TrayIcon.MessageType
 import java.io.BufferedReader
@@ -36,46 +45,42 @@ import java.io.FileNotFoundException
 import java.io.InputStreamReader
 import java.net.URI
 import java.net.URL
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.*
 
+
 class Controller : Initializable {
-    private var status = ""
-    private var finished = false
-    private var type = ""
     private var format = ToggleGroup()
     private var resizeable = ToggleGroup()
     private var listFormat = ToggleGroup()
     private var darkMode = ToggleGroup()
     @Volatile
-    private var isPathChanged = false
-    private var pathToYTdlEXE = "youtube-dl"//"/youtube-dl.exe"
-        set(value) {
-            isPathChanged = true
-            field = value
-        }
-    private val home:String = System.getProperty("user.home")
+    private var pathToYTdlEXE = "youtube-dl"
+    private val home: String = System.getProperty("user.home")
     private val fxScope:CoroutineScope = CoroutineScope(Job() + Dispatchers.JavaFx)
+    private lateinit var lang: Lang
 
     @FXML var path = TextField("$home/Downloads")
     @FXML var link = TextField()
     @FXML var errPane = Pane()
     @FXML var mainPane = Pane()
     @FXML var historyPane = SplitPane()
-    @FXML var errLabel = Label()
     @FXML var outputLabel = Label()
     @FXML var mainBgPicker = ColorPicker()
     @FXML var historyBgPicker = ColorPicker()
     @FXML var settingsBgPicker = ColorPicker()
     @FXML var settingsPane = Pane()
     @FXML var surePane = Pane()
-    @FXML var table: TableView<*> = TableView<Any?>()
+    @FXML var table = TableView<Element>()
     @FXML var mp4 = RadioButton()
     @FXML var mp3 = RadioButton()
     @FXML var vidBest = RadioButton()
     @FXML var audioBest = RadioButton()
     @FXML var listVid = RadioButton()
     @FXML var listAudio = RadioButton()
-    @FXML var listAudioAny = ToggleButton() //
+    @FXML var listAudioAny = ToggleButton()
     @FXML var listVideoMp4 = ToggleButton()
     @FXML var toggleNem = ToggleButton()
     @FXML var toggleIgen = ToggleButton()
@@ -96,7 +101,7 @@ class Controller : Initializable {
     fun handleBrowse() {
         println("handleBrowse")
         val dirChooser = DirectoryChooser()
-        dirChooser.title = "Cél mappa tallózása"
+        dirChooser.title = lang.dirTitle
         val file = dirChooser.showDialog(Main.stage)
         if (file != null) {
             path.text = file.toString()
@@ -108,12 +113,12 @@ class Controller : Initializable {
         val array = format.selectedToggle.toString().split("'".toRegex()).toTypedArray()
         println("convertAct")
         if (link.text.isEmpty()) {
-            errPaner("Nem lehet üres")
+            errPaner(lang.cannotBeEmpty)
         } else if (!link.text.contains("https://www.youtube.com/watch")) {
             if (link.text.startsWith("youtube.com/watch") || link.text.startsWith("www.youtube.com/watch")) {
                 link.text = "https://" + link.text
                 cmd(array[1])
-            } else errPaner("Ez nem egy youtube videó linkje!")
+            } else errPaner(lang.notYTVLink)
         } else {
             Writer.withoutOverwrite(link.text + ";", "/path.txt") // TODO
             println(format.selectedToggle)
@@ -126,7 +131,7 @@ class Controller : Initializable {
         println("convertList ${listFormat.selectedToggle.toString().split("'".toRegex()).toTypedArray()[1]}")
         val array = listFormat.selectedToggle.toString().split("'".toRegex()).toTypedArray()
         if (playlistLink.text.isEmpty()) {
-            errPaner("Nem lehet üres")
+            errPaner(lang.cannotBeEmpty)
         } else if (playlistLink.text.contains("youtube.com/playlist?list=")) {
             when(true) {
                 playlistLink.text.startsWith("https://youtube.com/playlist?list="),playlistLink.text.startsWith("https://www.youtube.com/playlist?list=") -> {
@@ -142,7 +147,7 @@ class Controller : Initializable {
                     return
                 }
                 else -> {
-                    errPaner("Ez nem egy youtube lejátszási lista neve")
+                    errPaner(lang.notYTPLLink)
                     return
                 }
             }
@@ -150,7 +155,7 @@ class Controller : Initializable {
     }
 
     @FXML fun restoreSetting() {
-        val wind = window("Reset settings", false, 400.0, 200.0, "/reset.fxml")
+        val wind = window(lang.resetSettingsTitle, false, 400.0, 200.0, "/reset.fxml")
         Main.s = Shared(this, wind)
         wind.show()
     }
@@ -162,13 +167,14 @@ class Controller : Initializable {
         stage.scene = Scene(Pane(txt))
         stage.show()
     }
-
     @FXML
     fun save() {
-        Writer.bufferedWriter(mainBgPicker.value.toString(), "/mainBg.txt")
-        Writer.bufferedWriter(historyBgPicker.value.toString(), "/historyBg.txt")
-        Writer.bufferedWriter(settingsBgPicker.value.toString(), "/settingsBg.txt")
-        System.err.println("Main: ${read("mainBg")}\nHistory: ${read("historyBg")}Settings: ${read("settingsBg")}")
+        Main.s.ser = SerializerData(ColorSerializer(
+            mainBgPicker.value.toString().slice(2..9),
+            historyBgPicker.value.toString().slice(2..9),
+            settingsBgPicker.value.toString().slice(2..9)), Langs.HU
+        )
+        Writer.bufferedWriter(text = Json.encodeToString(Main.s.ser), "/data.json")
         loadSettings()
     }
 
@@ -183,11 +189,11 @@ class Controller : Initializable {
     fun browseYTdlEXE() {
         val fileChooser = FileChooser()
         fileChooser.initialFileName = "youtube-dl.exe"
-        fileChooser.title = "youtube-dl.exe tallózása"
+        fileChooser.title = lang.browseYTDL
         fileChooser.initialFileName = "youtube-dl.exe"
         fileChooser.extensionFilters.addAll(
-            FileChooser.ExtensionFilter("Végrehajtható fájlok", "*.exe"),
-            FileChooser.ExtensionFilter("Más fájlok", "*.*")
+            FileChooser.ExtensionFilter(lang.executableFiles, "*.exe"),
+            FileChooser.ExtensionFilter(lang.otherFiles, "*.*")
         )
         val file = fileChooser.showOpenDialog(Main.stage)
         if (file != null) {
@@ -201,17 +207,21 @@ class Controller : Initializable {
     @FXML
     fun handleDownload() {
         if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
-            Desktop.getDesktop().browse(URI("https://youtube-dl.org"));
+            Desktop.getDesktop().browse(URI("https://youtube-dl.org"))
         }
     }
-
+    private fun addElement(e: Element) {
+        db.addElement(e)
+        data.add(e)
+    }
+    private fun addElement(link: String, date: String) = addElement(Element(link, date))
     private fun cmd(type: String) { // TODO Make it work for non windows systems
         println("cmd")
         println(path.toString() + "\t" + path.text)
         println(link.toString() + "\t" + path.text)
         println(pathToYTdlEXE + " -o " + path.text + " " + link.text)
+        addElement(link.text, SimpleDateFormat("yyyy.MM.dd_HH:mm.ss").format(Calendar.getInstance().time))
         val t1 = Thread {
-            this.type = type
             println("Type: $type\nLink: ${link.text}\nPath: ${path.text}")
             try {
                 System.err.println(type)
@@ -291,10 +301,10 @@ class Controller : Initializable {
                         println("ELSE")
                     }
                 }
-                status = "A letöltés elkezdődött..."
+                fxScope.launch { outputLabel.text = lang.downloadStarted }
                 println("Builder: " + builder + "\tCommand: " + builder.command())
                 var line: String?
-                var process: Process? = null
+                val process: Process?
                 try {
                     process = builder.start()
                     val r = BufferedReader(InputStreamReader(process.inputStream))
@@ -303,33 +313,17 @@ class Controller : Initializable {
                         if (line == null) {
                             break
                         }
-                        status = line
                         println(line)
-                        fxScope.launch {
-                            outputLabel.text = line
-                        }
+                        fxScope.launch { outputLabel.text = line }
                     }
-                    //fxScope.launch { outputLabel.text = "A letöltés befejeződött" }
                     if (SystemTray.isSupported()) {
-                        val td = Controller()
-                        td.displayTray()
+                        notification(Main.s.ser.language.title)
                     } else {
                         System.err.println("System tray not supported!")
                     }
-                } catch (e: Exception) {
-                    println("Inner")
-                    e.printStackTrace()
-                    finished = true
-                }
-            } catch (ex: Exception) {
-                println("Outer")
-                ex.printStackTrace()
-                finished = true
-            }
-            finished = true
-            fxScope.launch {
-                outputLabel.text = "Letöltés befejeződött"
-            }
+                } catch (e: Exception) { e.printStackTrace() }
+            } catch (ex: Exception) { ex.printStackTrace() }
+            fxScope.launch { outputLabel.text = lang.downloadEnded }
         }
         t1.start()
     }
@@ -357,23 +351,41 @@ class Controller : Initializable {
     }
 
     fun loadSettings() {
+        var main: String
+        var history: String
+        var settings: String
         try {
-            val main = read("mainBg")
-            val history = read("historyBg")
-            val settings = read("settingsBg")
-            mainBgPicker.value = Color.valueOf(main)
-            historyBgPicker.value = Color.valueOf(history)
-            settingsBgPicker.value = Color.valueOf(settings)
-            mainTab.style = "-fx-background-color: #${main.split("x")[1]};"
-            historyTab.style = "-fx-background-color: #${history.split("x")[1]};"
-            settingsTab.style = "-fx-background-color: #" + settings.split("x")[1] + ";"
-            mainPane.style = "-fx-background-color: #" + main.split("x")[1] + ";"
-            historyPane.style = "-fx-background-color: #" + history.split("x")[1] + ";"
-            settingsPane.style = "-fx-background-color: #" + settings.split("x")[1] + ";"
+            try {
+                val decoded = Json.decodeFromString<SerializerData>(read("data.json"))
+                main = decoded.colors!!.main
+                history = decoded.colors.history
+                settings = decoded.colors.settings // .split("x")[1]
+            }catch(e: Exception) {
+                e.printStackTrace()
+                main = "ffffffff"
+                history = "ffffffff"
+                settings = "ffffffff"
+            }
+            mainBgPicker.value = Color.valueOf("0x$main")
+            historyBgPicker.value = Color.valueOf("0x$history")
+            settingsBgPicker.value = Color.valueOf("0x$settings")
+            mainTab.style = "-fx-background-color: #${main};"
+            historyTab.style = "-fx-background-color: #${history};"
+            settingsTab.style = "-fx-background-color: #$settings;"
+            mainPane.style = "-fx-background-color: #$main;"
+            historyPane.style = "-fx-background-color: #$history;"
+            settingsPane.style = "-fx-background-color: #$settings;"
         }catch(th: Throwable) {
             th.printStackTrace()
             err(th)
         }
+    }
+
+    private var data: ObservableList<Element> = FXCollections.observableArrayList<Element>()
+    fun setHistory() {
+        Shared.table = table
+        data = Foo().setTableData()
+        System.err.println(table.items)
     }
 
     private fun defaultVisibility() {
@@ -389,37 +401,27 @@ class Controller : Initializable {
 
     override fun initialize(location: URL?, resources: ResourceBundle?) {
         println("Initialize")
+        Main.s = Shared()
+        lang = Main.s.ser.language
         val downloadView = ImageView(Image("/download.png"))
         downloadView.fitHeight = 25.0
         downloadView.fitWidth = 25.0
         downloadButton.graphic = downloadView
-        ytdlpath.text = "/youtube-dl.exe"
         defaultVisibility()
         findYtDl()
-        setToggles()
-        loadSettings()
+        setToggles();
+        setHistory()
+        try {
+            loadSettings()
+        }catch(e: Exception) {
+            window("Fatal Error").show()
+        }
         path.text = "$home/Downloads"
     }
 
-    private fun read(name: String): String {
-        println("read")
-        try {
-            val file = File(this::class.java.getResource("/$name.txt")!!.file)
-            val sc = Scanner(file)
-            while (sc.hasNextLine()) {
-                val data = sc.nextLine()
-                println(data)
-                return data
-            }
-            sc.close()
-        } catch (e: FileNotFoundException) {
-            e.printStackTrace()
-        }
-        return ""
-    }
 
     @Throws(AWTException::class)
-    fun displayTray() {
+    fun notification(caption: String = "Youtube videó letöltő", text: String = "A letöltés befejeződött") {
         //Obtain only one instance of the SystemTray object
         val tray = SystemTray.getSystemTray()
 
@@ -437,6 +439,34 @@ class Controller : Initializable {
     }
 
     companion object {
+        @JvmStatic
+        fun read(name: String): String {
+            println("read")
+            try {
+                val file = File(this::class.java.getResource("/$name")!!.file)
+                val sc = Scanner(file)
+                while (sc.hasNextLine()) {
+                    val data = sc.nextLine()
+                    println(data)
+                    return data
+                }
+                sc.close()
+            } catch (e: FileNotFoundException) {
+                e.printStackTrace()
+            }
+            return ""
+        }
+        @JvmStatic
+        fun decode() = Json.decodeFromString<SerializerData>(read("data.json"))
+        @JvmStatic
+        fun prep() {
+
+            bufferedWriter(Json.encodeToString(SerializerData(
+                ColorSerializer(
+                    "ffffffff", "ffffffff", "ffffffff"
+                ), Langs.EN
+            )), "/data.json")
+        }
         var workDir: String = System.getProperty("user.dir")!!
     }
     private fun window(title: String = "", isResizable: Boolean = false, width: Double = 400.0, height: Double = 200.0): Stage {

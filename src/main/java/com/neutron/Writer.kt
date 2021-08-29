@@ -1,10 +1,8 @@
 package com.neutron
 
-import com.neutron.controllers.Controller
 import java.io.*
 
 internal object Writer {
-    private val workDir = Controller.workDir
     fun bufferedWriter(text: String, path: String) {
         try {
             val fos = FileOutputStream(this::class.java.getResource(path)!!.file)
@@ -13,6 +11,8 @@ internal object Writer {
             bout.write(a)
             bout.flush()
             bout.close()
+            fos.flush()
+            fos.close()
         } catch (ex: IOException) {
             System.err.println("Error in bufferedWriter")
             ex.printStackTrace()
@@ -20,6 +20,7 @@ internal object Writer {
     }
 
     fun withoutOverwrite(text: String?, path: String) {
+        if(text.isNullOrEmpty()) return
         val log = File(this::class.java.getResource(path)!!.file)
         try {
             if (!log.exists()) {

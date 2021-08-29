@@ -1,9 +1,13 @@
 package com.neutron.controllers
 
+import com.neutron.ColorSerializer
 import com.neutron.Main
+import com.neutron.SerializerData
 import com.neutron.Writer
 import javafx.fxml.FXML
 import javafx.scene.layout.AnchorPane
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 class Reset {
     @FXML
@@ -12,9 +16,11 @@ class Reset {
         Main.s.s.close()
     }
     fun yes() {
-        Writer.bufferedWriter("0xffffffff", "/mainBg.txt")
-        Writer.bufferedWriter("0xffffffff", "/historyBg.txt")
-        Writer.bufferedWriter("0xffffffff", "/settingsBg.txt")
+        Main.s.ser = SerializerData(ColorSerializer(
+            "ffffffff",
+            "ffffffff",
+            "ffffffff"), Main.s.ser.language)
+        Writer.bufferedWriter(text = Json.encodeToString(Main.s.ser), "/data.json")
         Main.s.c.loadSettings()
         Main.s.s.close()
     }

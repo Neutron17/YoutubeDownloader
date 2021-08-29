@@ -5,7 +5,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.Separator?>
-<?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableView?>
@@ -13,8 +12,6 @@
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="650" prefWidth="600" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.neutron.controllers.Controller">
@@ -88,32 +85,17 @@
                     </content>
                 </Tab>
                 <Tab id="historyTab" fx:id="historyTab" text="Előzmények">
-                    <content>
-                        <SplitPane id="historyPane" fx:id="historyPane" dividerPositions="0.29797979797979796" prefHeight="160.0" prefWidth="200.0">
-                            <items>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
-                                    <children>
-                                        <StackPane prefHeight="611.0" prefWidth="175.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                    </children>
-                                </AnchorPane>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
-                                    <children>
-                                        <Pane prefHeight="611.0" prefWidth="417.0">
-                                            <children>
-                                                <TableView id="table" fx:id="table" editable="true" prefHeight="424.0" prefWidth="421.0">
-                                                    <placeholder>
-                                                        <Label text="Nincsenek Előzmények" />
-                                                    </placeholder>
-                                                    <columns>
-                                                    </columns>
-                                                </TableView>
-                                            </children>
-                                        </Pane>
-                                    </children>
-                                </AnchorPane>
-                            </items>
-                        </SplitPane>
-                    </content>
+               <content>
+                   <TableView id="table" fx:id="table" editable="true" prefHeight="200.0" prefWidth="200.0" >
+                       <placeholder>
+                           <Label text="Nincs adat." />
+                       </placeholder>
+                       <columns>
+                       </columns>
+                       <columns>
+                       </columns>
+                   </TableView>
+               </content>
                 </Tab>
                 <Tab id="settingsTab" fx:id="settingsTab" text="Beállítások">
                     <content>

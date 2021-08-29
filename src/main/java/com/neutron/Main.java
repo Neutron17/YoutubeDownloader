@@ -4,23 +4,29 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.util.Objects;
 
 public class Main extends Application {
     public static Stage stage;
+    public static Scene scene;
     public static Shared s;
+    public static DB db;
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
+        db = new DB();
+        System.out.println(db.getAllElements());
         Parent root = null;
         root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/sample.fxml")));
         stage = primaryStage;
-        stage.setTitle("Youtube videó letöltő");
-        //stage.getIcons().add(new Image("/youtube2.png"));
+        stage.setTitle(s.ser.getLanguage().getTitle());
+        stage.getIcons().add(new Image("/youtube.jpeg"));
         stage.setResizable(false);
         assert root != null;
-        stage.setScene(new Scene(root, 600, 650));
+        scene = new Scene(root, 600, 650);
+        stage.setScene(scene);
         stage.show();
     }
 
