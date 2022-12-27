@@ -52,10 +52,10 @@ public class Foo {
 
         TableColumn<Element, String> removeCol = new TableColumn<>("Törlés");
         Callback<TableColumn<Element, String>, TableCell<Element, String>> cellFactory =
-                new Callback<>() {
+                new Callback<TableColumn<Element, String>, TableCell<Element, String>>() {
                     @Override
                     public TableCell<Element, String> call(final TableColumn<Element, String> param) {
-                        return new TableCell<>() {
+                        return new TableCell<Element, String>() {
                             final Button btn = new Button("Törlés");
 
                             @Override
@@ -65,9 +65,9 @@ public class Foo {
                                     setGraphic(null);
                                 } else {
                                     btn.setOnAction((ActionEvent event) -> {
-                                        Element Element = getTableView().getItems().get(getIndex());
-                                        data.remove(Element);
-                                        db.removeElement(Element);
+                                        Element element = getTableView().getItems().get(getIndex());
+                                        data.remove(element);
+                                        db.removeElement(element);
                                     });
                                     setGraphic(btn);
                                 }

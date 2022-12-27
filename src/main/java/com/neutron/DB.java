@@ -9,7 +9,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-
 public class DB {
 
     final String URL = "jdbc:derby:sampleDB;create=true";
@@ -53,8 +52,7 @@ public class DB {
 
         try {
             ResultSet rs = dbmd.getTables(null, "APP", "HISTORY", null);
-            if(!rs.next())
-            {
+            if(!rs.next()) {
                 createStatement.execute("create table history(id INT not null primary key GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),link varchar(50), date varchar(30))");
             }
         } catch (SQLException ex) {

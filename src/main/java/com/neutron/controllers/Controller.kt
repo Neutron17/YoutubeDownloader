@@ -444,6 +444,8 @@ class Controller : Initializable {
             println("read")
             try {
                 val file = File(this::class.java.getResource("/$name")!!.file)
+                if(!file.exists())
+                    return "{\"colors\":{\"main\":\"ffffffff\",\"history\":\"ffffffff\",\"settings\":\"ffffffff\"},\"language\":{\"title\":\"Youtube videó letöltő\",\"dirTitle\":\"Cél mappa tallózása\",\"cannotBeEmpty\":\"Nem lehet üres\",\"notYTVLink\":\"Ez nem egy youtube videó linkje!\",\"notYTPLLink\":\"Ez nem egy youtube lejátszási lista neve\",\"resetSettingsTitle\":\"youtube-dl.exe tallózása\",\"browseYTDL\":\"Youtube-dl.exe tallózása\",\"executableFiles\":\"Végrehajtható fájlok\",\"otherFiles\":\"Más fájlok\",\"downloadStarted\":\"A letöltés elkezdődött...\",\"downloadEnded\":\"Letöltés befejeződött\"}}"
                 val sc = Scanner(file)
                 while (sc.hasNextLine()) {
                     val data = sc.nextLine()
