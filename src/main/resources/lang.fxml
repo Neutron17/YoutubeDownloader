@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="primaryStage" prefHeight="250.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.neutron.controllers.LangController">
+   <children>
+       <ToggleButton fx:id="hu" layoutX="236.0" layoutY="80.0" prefHeight="60.0" prefWidth="100.0" text="Magyar" textAlignment="CENTER" AnchorPane.leftAnchor="236.0" AnchorPane.rightAnchor="14.0">
+         <toggleGroup>
+            <ToggleGroup fx:id="langtoggler" />
+         </toggleGroup></ToggleButton>
+       <ToggleButton fx:id="en" layoutX="14.0" layoutY="80.0" prefHeight="60.0" prefWidth="100.0" text="English" toggleGroup="$langtoggler" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="236.0" />
+       <Button fx:id="submit" layoutY="223.0" onAction="#submitHandler" text="SUBMIT" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+   </children>
+</AnchorPane>
