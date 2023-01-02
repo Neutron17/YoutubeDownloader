@@ -1,20 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ColorPicker?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.RadioButton?>
-<?import javafx.scene.control.Separator?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.ToggleButton?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="650" prefWidth="600" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.neutron.controllers.Controller">
+<AnchorPane prefHeight="650" prefWidth="600" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.neutron.controllers.Controller">
     <children>
         <TabPane layoutX="147.0" layoutY="174.0" prefHeight="650.0" prefWidth="750.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <tabs>
@@ -49,16 +39,19 @@
                                         <Font size="14.0" />
                                     </font>
                                 </Button>
-                                <RadioButton id="mp4" fx:id="mp4" layoutX="465.0" layoutY="142.0" mnemonicParsing="false" text="mp4" />
-                                <RadioButton id="mp3" fx:id="mp3" layoutX="461.0" layoutY="217.0" mnemonicParsing="false" text="mp3" />
+                                <RadioButton id="0" fx:id="mp4" layoutX="465.0" layoutY="142.0" mnemonicParsing="false" text="mp4">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="format" />
+                           </toggleGroup></RadioButton>
+                                <RadioButton id="2" fx:id="mp3" layoutX="461.0" layoutY="217.0" mnemonicParsing="false" text="mp3" toggleGroup="$format" />
                                 <Label id="mainText" fx:id="vidLabel" layoutX="399.0" layoutY="138.0" prefHeight="28.0" prefWidth="59.0" text="Videó: " />
                                 <Label id="mainText" fx:id="audioLabel" layoutX="399.0" layoutY="215.0" text="Hang: ">
                                     <font>
                                         <Font size="16.0" />
                                     </font>
                                 </Label>
-                                <RadioButton id="vidBest" fx:id="vidBest" layoutX="465.0" layoutY="175.0" mnemonicParsing="false" text="legjobb videó" />
-                                <RadioButton id="audioBest" fx:id="audioBest" layoutX="465.0" layoutY="249.0" mnemonicParsing="false" text="legjobb hang" />
+                                <RadioButton id="1" fx:id="vidBest" layoutX="465.0" layoutY="175.0" mnemonicParsing="false" text="legjobb videó" toggleGroup="$format" />
+                                <RadioButton id="3" fx:id="audioBest" layoutX="465.0" layoutY="249.0" mnemonicParsing="false" text="legjobb hang" toggleGroup="$format" />
                                 <Separator layoutX="195.0" layoutY="48.0" prefWidth="200.0" />
                                 <Separator layoutX="14.0" layoutY="531.0" prefWidth="200.0" />
                                 <Label fx:id="plistLabel" layoutX="16.0" layoutY="295.0" text="Lejátszási lista linkje: ">
@@ -71,22 +64,22 @@
                                         <Font size="18.0" />
                                     </font></TextField>
                                 <Button fx:id="listButton" layoutX="485.0" layoutY="282.0" mnemonicParsing="false" onAction="#convertList" prefHeight="54.0" prefWidth="100.0" text="Konvertálás" />
-                                <RadioButton fx:id="listVid" layoutX="504.0" layoutY="346.0" mnemonicParsing="false" text="Videó" />
-                                <RadioButton fx:id="listAudio" layoutX="507.0" layoutY="424.0" mnemonicParsing="false" text="Hang(mp3)" />
+                                <RadioButton id="4" fx:id="listVid" layoutX="504.0" layoutY="346.0" mnemonicParsing="false" text="Videó" toggleGroup="$format" />
+                                <RadioButton id="7" fx:id="listAudio" layoutX="507.0" layoutY="424.0" mnemonicParsing="false" text="Hang(mp3)" toggleGroup="$format" />
                                 <Label id="outputLabel" fx:id="outputLabel" layoutX="29.0" layoutY="128.0" prefHeight="136.0" prefWidth="359.0" textAlignment="JUSTIFY" wrapText="true">
                                     <font>
                                         <Font size="18.0" />
                                     </font>
                                 </Label>
-                                <RadioButton fx:id="listVideoMp4" layoutX="506.0" layoutY="370.0" mnemonicParsing="false" text="Videó(mp4)" />
-                                <RadioButton fx:id="listAudioAny" layoutX="504.0" layoutY="396.0" mnemonicParsing="false" text="Hang" />
+                                <RadioButton id="5" fx:id="listVideoMp4" layoutX="506.0" layoutY="370.0" mnemonicParsing="false" text="Videó(mp4)" toggleGroup="$format" />
+                                <RadioButton id="6" fx:id="listAudioAny" layoutX="504.0" layoutY="396.0" mnemonicParsing="false" text="Hang" toggleGroup="$format" />
                             </children>
                         </Pane>
                     </content>
                 </Tab>
                 <Tab id="historyTab" fx:id="historyTab" text="Előzmények">
                <content>
-                   <TableView id="table" fx:id="table" editable="true" prefHeight="200.0" prefWidth="200.0" >
+                   <TableView id="table" fx:id="table" editable="true" prefHeight="200.0" prefWidth="200.0">
                        <placeholder>
                            <Label text="Nincs adat." />
                        </placeholder>

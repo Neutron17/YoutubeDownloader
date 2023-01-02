@@ -8,7 +8,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.util.Objects;
-
+// --module-path=/usr/lib/jvm/default/lib/javafx.base.jar:/usr/lib/jvm/default/lib/javafx.fxml.jar:/usr/lib/jvm/default/lib/javafx.graphics.jar:/usr/lib/jvm/default/lib/javafx.controls.jar --add-modules=javafx.controls,javafx.fxml
 public class Main extends Application {
     public static Stage stage;
     public static Scene scene;
@@ -31,7 +31,7 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) { launch(args); }
-    public static void err(Throwable th) {
+    public static void error(Throwable th) {
         // TODO Write error to file
     }
 }

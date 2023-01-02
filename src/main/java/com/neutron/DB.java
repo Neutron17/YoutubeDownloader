@@ -53,7 +53,7 @@ public class DB {
         try {
             ResultSet rs = dbmd.getTables(null, "APP", "HISTORY", null);
             if(!rs.next()) {
-                createStatement.execute("create table history(id INT not null primary key GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),link varchar(50), date varchar(30))");
+                createStatement.execute("create table history(id INT not null primary key GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),link varchar(128), date varchar(36))");
             }
         } catch (SQLException ex) {
             System.out.println("Valami baj van az adattáblák létrehozásakor.");
