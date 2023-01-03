@@ -8,8 +8,10 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="ytd" />
-        <module name="YoutubeDownloader" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="YoutubeDownloader" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>

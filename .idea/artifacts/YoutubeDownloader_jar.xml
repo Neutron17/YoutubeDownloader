@@ -1,0 +1,37 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="YoutubeDownloader:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/YoutubeDownloader_jar</output-path>
+    <root id="archive" name="YoutubeDownloader.jar">
+      <element id="module-output" name="YoutubeDownloader" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jetbrains/kotlinx/kotlinx-serialization-json/1.4.1/kotlinx-serialization-json-1.4.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jetbrains/kotlinx/kotlinx-serialization-core-jvm/1.4.1/kotlinx-serialization-core-jvm-1.4.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jetbrains/kotlin/kotlin-stdlib-jdk7/1.7.22/kotlin-stdlib-jdk7-1.7.22.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jetbrains/kotlinx/kotlinx-coroutines-core/1.6.3-native-mt/kotlinx-coroutines-core-1.6.3-native-mt.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jetbrains/kotlinx/kotlinx-serialization-json-jvm/1.4.1/kotlinx-serialization-json-jvm-1.4.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jetbrains/annotations/13.0/annotations-13.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jetbrains/kotlinx/kotlinx-coroutines-core-jvm/1.6.3-native-mt/kotlinx-coroutines-core-jvm-1.6.3-native-mt.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="/usr/lib/jvm/default/lib/javafx-swt.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="/usr/lib/jvm/default/lib/javafx.base.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="/usr/lib/jvm/default/lib/javafx.controls.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="/usr/lib/jvm/default/lib/javafx.fxml.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="/usr/lib/jvm/default/lib/javafx.graphics.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="/usr/lib/jvm/default/lib/javafx.media.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="/usr/lib/jvm/default/lib/javafx.swing.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="/usr/lib/jvm/default/lib/javafx.web.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jetbrains/kotlin/kotlin-stdlib-common/1.7.22/kotlin-stdlib-common-1.7.22.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jetbrains/kotlin/kotlin-maven-serialization/1.5.30/kotlin-maven-serialization-1.5.30.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.24/lombok-1.18.24.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/src/main/resources/derby.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/src/main/resources/derbyclient.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/src/main/resources/derbynet.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/src/main/resources/derbyoptionaltools.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/src/main/resources/derbyrun.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/src/main/resources/derbyshared.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/src/main/resources/derbytools.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jetbrains/kotlin/kotlin-stdlib-jdk8/1.7.22/kotlin-stdlib-jdk8-1.7.22.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jetbrains/kotlinx/kotlinx-coroutines-javafx/1.6.3-native-mt/kotlinx-coroutines-javafx-1.6.3-native-mt.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jetbrains/kotlin/kotlin-stdlib/1.7.22/kotlin-stdlib-1.7.22.jar" path-in-jar="/" />
+      <element id="library" level="project" name="javafx-swt" />
+    </root>
+  </artifact>
+</component>
